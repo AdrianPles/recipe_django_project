@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RecipeForm
 from .models import Recipe
 
@@ -20,3 +20,12 @@ def create_recipe(request: HttpRequest):
     else:
         form = RecipeForm()
         return render(request, "recipes/recipe_form.html", context={"form": form})
+
+def delete_recipe(request: HttpRequest, pk: int):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    if request.method == "POST":
+        recipe.delete()
+        return redirect("home")
+    else:
+        return render(request, "recipes/recipe_confirm_delete.html", context={"recipe": recipe})
+

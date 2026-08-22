@@ -9,7 +9,7 @@
         <a href="{% url 'create_recipe' %}">Adaugă rețetă</a>
         <ul>
             {% for r in recipes %}
-            <li>{{ r.title }} - {{ r.cooking_time }}</li>
+            <li>{{ r.title }} - {{ r.cooking_time }} <a href="{% url 'delete_recipe' r.pk %}">🗑️</a></li>
             {% endfor %}
         </ul>
     </body>

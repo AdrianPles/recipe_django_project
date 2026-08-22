@@ -6,6 +6,7 @@ class Recipe(models.Model):
     # definim un atribut al clasei Recipe, acesta fiind o lista fixa de tupluri, reprezentand optiunile din care utilizatorul poate selecta, cand alege categoria din care face parte reteta (primul elem. afisare in db/al doile elm. afisare pt. user)
 
     CATEGORY_CHOICES = [
+        ('mic_dejun', 'Mic dejun'),
         ('ciorbe', 'Ciorbe / Supe'),
         ('fel_principal', 'Fel principal'),
         ('desert', 'Desert'),
