@@ -16,7 +16,7 @@ def create_recipe(request: HttpRequest):
         if recipe_instance.is_valid():
             # aici cream o reteta in db
             recipe_instance.save()
-            return redirect("create_recipe")
+            return redirect("home")
     else:
         form = RecipeForm()
         return render(request, "recipes/recipe_form.html", context={"form": form})

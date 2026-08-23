@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="ro">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmare ștergere rețetă</title>
-</head>
-<body>
+{% extends "recipes/base.html" %}
+
+{% block title %}
+Confirmă ștergerea rețetei
+{% endblock %}
+
+{% block content %}
+
     <p>Dorești ștergerea rețetei?</p>
     <p>{{ recipe }}</p>
     <form method="post">
@@ -13,5 +13,6 @@
         <button type="submit">Da</button>
     </form>
     <a href="{% url 'home' %}">Nu</a>
-</body>
-</html>
+
+{% endblock %}
+

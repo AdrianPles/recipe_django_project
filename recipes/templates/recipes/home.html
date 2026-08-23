@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="ro">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acasă</title>
-</head>
-    <body>
-        <a href="{% url 'create_recipe' %}">Adaugă rețetă</a>
+{% extends "recipes/base.html" %}
+
+{% block title %}
+Acasă
+{% endblock %}
+
+{% block content %}
         <ul>
             {% for r in recipes %}
             <li>{{ r.title }} - {{ r.cooking_time }} <a href="{% url 'delete_recipe' r.pk %}">🗑️</a></li>
             {% endfor %}
         </ul>
-    </body>
-</html>
+{% endblock %}
