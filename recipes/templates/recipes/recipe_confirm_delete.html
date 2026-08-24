@@ -12,7 +12,7 @@ Confirmă ștergerea rețetei
         {% csrf_token %}
         <button type="submit">Da</button>
     </form>
-    <a href="{% url 'home' %}">Nu</a>
+    <a class="cancel-delete" href="{% url 'home' %}">Nu</a>
 
 {% endblock %}
 

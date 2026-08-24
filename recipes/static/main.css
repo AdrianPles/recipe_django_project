@@ -1,0 +1,79 @@
+
+li {
+}
+
+.cancel-delete:visited {
+color: var(--accent-text);
+}
+
+.cancel-delete {
+border: var(--border-width) solid var(--accent);
+background-color: var(--accent);
+color: var(--accent-text);
+padding: 0.5em;
+text-decoration: none;
+line-height: normal;
+display: inline-block;
+max-width: 100%;
+border-radius: var(--standard-border-radius);
+width: 45px;
+}
+
+nav {
+    padding-top: 40px;
+}
+
+.main-nav{
+    display: flex;
+    justify-content: space-between;
+}
+.recipes-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding:20px 0px 20px 0px;
+}
+.recipe-card{
+    width: 250px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 14px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+.cover-image {
+    width: 250px !important;
+    height: 175px !important;
+    object-fit: cover;
+}
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+}
+h4{
+    text-align:center;
+}
+.card-content > * {
+    margin: 0px;
+}
+
+.bottom-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+}
+.bottom-info * {
+    text-decoration: none;
+}
+.delete-choice{
+    width: 100px;
+}
+.choices {
+    display: flex;
+    gap: 10px;
+}
