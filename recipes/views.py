@@ -2,31 +2,32 @@ from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RecipeForm
 from .models import Recipe
+from django.db.models.functions import Lower
+
 
 def home(request: HttpRequest):
     return HttpResponse("Welcome to my webserver!")
 
 def list_recipes(request: HttpRequest):
-    # am declarat variabilele 'by' si 'sort' pentru a realiza doua lebaluri de sortare
+    # am declarat variabilele 'by' si 'sort' pentru a realiza doua label-uri de filtrare/sortare
     by = request.GET.get("by", "title")
     sort = request.GET.get("sort", "asc")
-    # aici am asociat elementele dupa care se realizeaza sortarea, cu home.html
-    criterii_sortare = {
-        "title": "title",
-        "category": "category",
-        "created_at": "created_at"
-    }
-    camp_baza_de_date = criterii_sortare.get(by, "title")
-    if sort == "desc":
-        camp_baza_de_date = f"-{camp_baza_de_date}"
-    recipes = Recipe.objects.all().order_by(camp_baza_de_date)
-    return render(request, "recipes/home.html", context={"recipes": recipes})
-
-    # sort = request.GET.get("sort")
-    # if sort == "asc":
-    #     recipes = Recipe.objects.all().order_by("category")
-    # if sort == "desc":
-    #     recipes = Recipe.objects.all().order_by("-category")
+    recipes = Recipe.objects.all()
+    # pentru o sortare corecta dupa 'titlu reteta' folosim functia Django/Lower
+    if by == "title":
+        if sort == "asc":
+            recipes = recipes.order_by(Lower("title"))
+        else:
+            recipes = recipes.order_by(Lower("title").desc())
+    else:
+        criterii_sortare = {
+            "category": "category",
+            "created_at": "created_at"
+        }
+        camp_baza_de_date = criterii_sortare.get(by, "title")
+        if sort == "desc":
+            camp_baza_de_date = f"-{camp_baza_de_date}"
+        recipes = recipes.order_by(camp_baza_de_date)
     return render(request, "recipes/home.html", context={"recipes": recipes})
 
 def create_recipe(request: HttpRequest):
