@@ -34,7 +34,6 @@ Acasă
 <script>
     // 1. Citim valorile actuale din link (URL) când se încarcă pagina
     const params = new URLSearchParams(window.location.search);
-
     const curentBy = params.get("by");
     const curentSort = params.get("sort");
 
@@ -51,7 +50,7 @@ Acasă
         const byValue = document.getElementById("by").value;
         const sortValue = document.getElementById("sort").value;
 
-        // Construim linkul final: ?by=categorie&sort=directie
+        // Construim linkul final: ?by=categorie&sort=sortare asc/desc
         window.location.href = "?by=" + byValue + "&sort=" + sortValue;
     }
 </script>
