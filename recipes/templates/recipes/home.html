@@ -5,9 +5,14 @@ Acasă
 {% endblock %}
 
 {% block content %}
+
         <ul>
             {% for r in recipes %}
-            <li>{{ r.title }} - {{ r.cooking_time }} <a href="{% url 'delete_recipe' r.pk %}">🗑️</a></li>
+            <li>{{ r.title }} - {{ r.cooking_time }}
+                <a href="{% url 'delete_recipe' r.pk %}">🗑️</a>
+                <a href="{% url 'update_recipe' r.pk %}">✏️️</a>
+            </li>
             {% endfor %}
         </ul>
+
 {% endblock %}

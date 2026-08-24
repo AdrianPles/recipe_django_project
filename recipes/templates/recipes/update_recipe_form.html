@@ -1,0 +1,14 @@
+{% extends "recipes/base.html" %}
+
+{% block title %}
+Modifică rețetă
+{% endblock %}
+
+{% block content %}
+    <h1>Modifică rețetă:</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvează rețeta</button>
+    </form>
+{% endblock %}

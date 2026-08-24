@@ -29,3 +29,13 @@ def delete_recipe(request: HttpRequest, pk: int):
     else:
         return render(request, "recipes/recipe_confirm_delete.html", context={"recipe": recipe})
 
+def update_recipe(request: HttpRequest, pk: int):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    if request.method == "POST":
+        recipe_instance = RecipeForm(request.POST, instance=recipe)
+        if recipe_instance.is_valid():
+            recipe_instance.save()
+            return redirect("home")
+    else:
+        form = RecipeForm(instance=recipe)
+        return render(request, "recipes/update_recipe_form.html", context={"form": form})
