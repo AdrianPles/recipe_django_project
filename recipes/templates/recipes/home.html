@@ -6,6 +6,16 @@ Acasă
 
 {% block content %}
 
+<form method="GET" action="" style="margin-bottom: 20px;">
+    <!-- Păstrăm sortarea actuală dacă utilizatorul a selectat deja ceva -->
+    <input type="hidden" name="by" value="{{ request.GET.by }}">
+    <input type="hidden" name="sort" value="{{ request.GET.sort }}">
+
+    <label for="search">Caută rețetă:</label>
+    <input type="text" id="search" name="q" value="{{ request.GET.q }}" placeholder="Ex: ciorbă cartofi...">
+    <button type="submit">Caută</button>
+</form>
+
 <!-- Meniul 1: Alegerea categoriei după care se face sortarea -->
 <label for="by">Filtrează după:</label>
 <select id="by" onchange="changeSort()">
