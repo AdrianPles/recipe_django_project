@@ -7,7 +7,26 @@ def home(request: HttpRequest):
     return HttpResponse("Welcome to my webserver!")
 
 def list_recipes(request: HttpRequest):
-    recipes = Recipe.objects.all()
+    # am declarat variabilele 'by' si 'sort' pentru a realiza doua lebaluri de sortare
+    by = request.GET.get("by", "title")
+    sort = request.GET.get("sort", "asc")
+    # aici am asociat elementele dupa care se realizeaza sortarea, cu home.html
+    criterii_sortare = {
+        "title": "title",
+        "category": "category",
+        "created_at": "created_at"
+    }
+    camp_baza_de_date = criterii_sortare.get(by, "title")
+    if sort == "desc":
+        camp_baza_de_date = f"-{camp_baza_de_date}"
+    recipes = Recipe.objects.all().order_by(camp_baza_de_date)
+    return render(request, "recipes/home.html", context={"recipes": recipes})
+
+    # sort = request.GET.get("sort")
+    # if sort == "asc":
+    #     recipes = Recipe.objects.all().order_by("category")
+    # if sort == "desc":
+    #     recipes = Recipe.objects.all().order_by("-category")
     return render(request, "recipes/home.html", context={"recipes": recipes})
 
 def create_recipe(request: HttpRequest):

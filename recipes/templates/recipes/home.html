@@ -6,9 +6,50 @@ Acasă
 
 {% block content %}
 
+<!-- Meniul 1: Alegerea categoriei după care se face sortarea -->
+<label for="by">Sortează după:</label>
+<select id="by" onchange="changeSort()">
+    <option value="title">Titlu rețetă</option>
+    <option value="category">Categorie</option>
+    <option value="created_at">Dată</option>
+</select>
+
+<!-- Meniul 2: Alegerea direcției  -->
+<label for="sort">Sortare:</label>
+<select id="sort" onchange="changeSort()">
+    <option value="asc">Crescător</option>
+    <option value="desc">Descrescător</option>
+</select>
+
+<script>
+    // 1. Citim valorile actuale din link (URL) când se încarcă pagina
+    const params = new URLSearchParams(window.location.search);
+
+    const curentBy = params.get("by");
+    const curentSort = params.get("sort");
+
+    // 2. Păstrăm opțiunile selectate vizibile în meniuri după refresh
+    if (curentBy) {
+        document.getElementById("by").value = curentBy;
+    }
+    if (curentSort) {
+        document.getElementById("sort").value = curentSort;
+    }
+
+    // 3. Funcția care trimite ambele valori în URL când schimbi ceva
+    function changeSort(){
+        const byValue = document.getElementById("by").value;
+        const sortValue = document.getElementById("sort").value;
+
+        // Construim linkul final: ?by=categorie&sort=directie
+        window.location.href = "?by=" + byValue + "&sort=" + sortValue;
+    }
+</script>
+
+
         <ul>
             {% for r in recipes %}
-            <li>{{ r.title }} - {{ r.cooking_time }}
+            <li>{{ r.title }} - {{ r.category }}
                 <a href="{% url 'delete_recipe' r.pk %}">🗑️</a>
                 <a href="{% url 'update_recipe' r.pk %}">✏️️</a>
             </li>
