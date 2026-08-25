@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.fields import DateTimeField
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class Recipe(models.Model):
     class Meta:
@@ -42,6 +44,8 @@ class Recipe(models.Model):
         help_text='Introdu timpul total exprimat în minute.',
         default=30
     )
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='recipes')
+
     def __str__(self):
         return self.title
 

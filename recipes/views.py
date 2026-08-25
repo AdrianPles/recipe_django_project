@@ -1,5 +1,7 @@
+from django.db.models import Model
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
 from .models import Recipe
 from django.db.models.functions import Lower
@@ -38,12 +40,15 @@ def list_recipes(request: HttpRequest):
         recipes = recipes.order_by(camp_baza_de_date)
     return render(request, "recipes/home.html", context={"recipes": recipes})
 
+@login_required()
 def create_recipe(request: HttpRequest):
     if request.method == "POST":
-        recipe_instance = RecipeForm(request.POST)
-        if recipe_instance.is_valid():
+        form = RecipeForm(request.POST)
+        if form.is_valid():
             # aici cream o reteta in db
-            recipe_instance.save()
+            recipe = form.save(commit=False)
+            recipe.user = request.user
+            recipe.save()
             return redirect("home")
     else:
         form = RecipeForm()

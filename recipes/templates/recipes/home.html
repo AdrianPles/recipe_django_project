@@ -75,7 +75,7 @@ Acasă
 
         <ul>
             {% for r in recipes %}
-            <li>{{ r.title }} - {{ r.get_category_display }}
+            <li>{{ r.title }} - {{ r.get_category_display }} - {{ user }}
                 <a href="{% url 'delete_recipe' r.pk %}">🗑️</a>
                 <a href="{% url 'update_recipe' r.pk %}">✏️️</a>
             </li>
