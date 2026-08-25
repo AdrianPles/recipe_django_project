@@ -3,6 +3,10 @@ from django.db.models.fields import DateTimeField
 
 
 class Recipe(models.Model):
+    class Meta:
+        # în limba română cu diacritice, configurăm afișarea la singular și plural în interfețe (ex: Django Admin).
+        verbose_name = 'Rețetă'
+        verbose_name_plural = 'Rețete'
     # definim un atribut al clasei Recipe, acesta fiind o lista fixa de tupluri, reprezentand optiunile din care utilizatorul poate selecta, cand alege categoria din care face parte reteta (primul elem. afisare in db/al doile elm. afisare pt. user)
 
     CATEGORY_CHOICES = [
@@ -42,7 +46,3 @@ class Recipe(models.Model):
         return self.title
 
 
-class Meta:
-    # rolul lui verbose_name in clasa Meta este de a traduce corect numele app-ului 'recipe' in romana si de a folosi diacritice
-    verbose_name = 'Rețetă'
-    verbose_name_plural = 'Rețete'

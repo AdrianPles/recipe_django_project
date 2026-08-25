@@ -8,6 +8,7 @@ Acasă
 
 <form method="GET" action="" style="margin-bottom: 20px;">
     <!-- Păstrăm sortarea actuală dacă utilizatorul a selectat deja ceva -->
+    <input type="hidden" name="category" value="{{ request.GET.category|default:'all' }}">
     <input type="hidden" name="by" value="{{ request.GET.by }}">
     <input type="hidden" name="sort" value="{{ request.GET.sort }}">
 
@@ -16,49 +17,65 @@ Acasă
     <button type="submit">Caută</button>
 </form>
 
-<!-- Meniul 1: Alegerea categoriei după care se face sortarea -->
-<label for="by">Filtrează după:</label>
-<select id="by" onchange="changeSort()">
-    <option value="title">Titlu rețetă</option>
-    <option value="category">Categorie</option>
-    <option value="created_at">Dată</option>
+<!-- Meniul 1: FILTRARE STRICTĂ DUPĂ CATEGORIE -->
+<label for="category_filter">Filtrează după categorie:</label>
+<select id="category_filter" onchange="applyFilters()">
+    <option value="all">Toate categoriile</option>
+    <option value="mic_dejun">Mic dejun</option>
+    <option value="ciorbe">Ciorbe / Supe</option>
+    <option value="fel_principal">Fel principal</option>
+    <option value="desert">Desert</option>
+    <option value="patiserie">Patiserie</option>
+    <option value="panificatie">Panificație</option>
 </select>
 
-<!-- Meniul 2: Alegerea direcției  -->
-<label for="sort">Sortare:</label>
-<select id="sort" onchange="changeSort()">
+<!-- Meniul 2: CRITERIU SORTARE -->
+<label for="by_filter">Ordonează după:</label>
+<select id="by_filter" onchange="applyFilters()">
+    <option value="title">Titlu rețetă</option>
+    <option value="category">Categorie</option>
+    <option value="created_at">Dată adăugare</option>
+</select>
+
+<!-- Meniul 3: DIRECȚIE SORTARE -->
+<label for="sort_filter">Sortare:</label>
+<select id="sort_filter" onchange="applyFilters()">
     <option value="asc">Crescător</option>
     <option value="desc">Descrescător</option>
 </select>
 
 <script>
-    // 1. Citim valorile actuale din link (URL) când se încarcă pagina
+    // 1. Citim valorile actuale din link (URL) sau punem valorile implicite din view
     const params = new URLSearchParams(window.location.search);
-    const curentBy = params.get("by");
-    const curentSort = params.get("sort");
+    const currentCategory = params.get("category") || "all";
+    const currentBy = params.get("by") || "title";
+    const currentSort = params.get("sort") || "asc";
 
-    // 2. Păstrăm opțiunile selectate vizibile în meniuri după refresh
-    if (curentBy) {
-        document.getElementById("by").value = curentBy;
-    }
-    if (curentSort) {
-        document.getElementById("sort").value = curentSort;
-    }
+    // 2. Setăm meniurile drop-down pe opțiunile active după refresh (rămân selectate)
+    document.getElementById("category_filter").value = currentCategory;
+    document.getElementById("by_filter").value = currentBy;
+    document.getElementById("sort_filter").value = currentSort;
 
-    // 3. Funcția care trimite ambele valori în URL când schimbi ceva
-    function changeSort(){
-        const byValue = document.getElementById("by").value;
-        const sortValue = document.getElementById("sort").value;
+    // 3. Funcția care trimite toate cele 3 criterii + căutarea text în URL
+    function applyFilters(){
+        const categoryValue = document.getElementById("category_filter").value;
+        const byValue = document.getElementById("by_filter").value;
+        const sortValue = document.getElementById("sort_filter").value;
 
-        // Construim linkul final: ?by=categorie&sort=sortare asc/desc
-        window.location.href = "?by=" + byValue + "&sort=" + sortValue;
+    // Modificăm parametrii URL-ului păstrând textul căutat (q) intact dacă există
+        params.set("category", categoryValue);
+        params.set("by", byValue);
+        params.set("sort", sortValue);
+
+    // Reîncărcăm pagina cu noul set complet de reguli
+        window.location.href = window.location.pathname + "?" + params.toString();
     }
 </script>
 
 
         <ul>
             {% for r in recipes %}
-            <li>{{ r.title }} - {{ r.category }}
+            <li>{{ r.title }} - {{ r.get_category_display }}
                 <a href="{% url 'delete_recipe' r.pk %}">🗑️</a>
                 <a href="{% url 'update_recipe' r.pk %}">✏️️</a>
             </li>

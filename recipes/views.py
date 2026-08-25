@@ -9,14 +9,18 @@ def home(request: HttpRequest):
     return HttpResponse("Welcome to my webserver!")
 
 def list_recipes(request: HttpRequest):
-    # am declarat variabilele 'by' si 'sort' pentru a realiza doua label-uri de filtrare/sortare, iar 'query' este variabila care se ocupa de cautarea cuvantului cheie din bara de cautare.
+    # am declarat variabilele 'category_filter', 'by' si 'sort' pentru a realiza doua label-uri de filtrare/sortare, iar 'query' este variabila care se ocupa de cautarea cuvantului cheie din casuta de cautare.
     query = request.GET.get("q")
+    category_filter = request.GET.get("category", "all")
     by = request.GET.get("by", "title")
     sort = request.GET.get("sort", "asc")
     recipes = Recipe.objects.all()
     # __icontains caută cuvântul oriunde în titlu și ignoră literele mari/mici
     if query:
         recipes = recipes.filter(title__icontains=query)
+    # logica ne permite afisarea unei singure categorii selectate de utilizator
+    if category_filter != "all":
+        recipes = recipes.filter(category=category_filter)
     # pentru o sortare corecta dupa 'titlu reteta' folosim functia Django/Lower
     if by == "title":
         if sort == "asc":
