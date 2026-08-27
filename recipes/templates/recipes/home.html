@@ -77,6 +77,10 @@ Acasă
         {% for r in recipes %}
             <li>{{ r.title }} - {{ r.get_category_display }}
                 <a href="{% url 'list_user_recipes' r.user.pk %}">{{ r.user.username }}️</a>
+                {% if  r.imagine_prezentare %}
+                    <img class="imagine_prezentare" src="{{ r.imagine_prezentare.url }}">
+                {% endif %}
+
                 {% if user.is_authenticated and user.pk == r.user.pk %}
                     <a href="{% url 'delete_recipe' r.pk %}">🗑️</a>
                     <a href="{% url 'update_recipe' r.pk %}">✏️️</a>

@@ -72,7 +72,7 @@ def list_user_recipes(request: HttpRequest, user_pk: int):
 @login_required()
 def create_recipe(request: HttpRequest):
     if request.method == "POST":
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             # aici cream o reteta in db
             recipe = form.save(commit=False)
@@ -98,7 +98,7 @@ def delete_recipe(request: HttpRequest, pk: int):
 def update_recipe(request: HttpRequest, pk: int):
     recipe = get_object_or_404(Recipe, pk=pk)
     if request.method == "POST":
-        recipe_instance = RecipeForm(request.POST, instance=recipe)
+        recipe_instance = RecipeForm(request.POST, request.FILES, instance=recipe)
         if recipe_instance.is_valid():
             recipe_instance.save()
             return redirect("home")

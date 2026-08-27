@@ -45,6 +45,7 @@ class Recipe(models.Model):
         default=30
     )
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='recipes')
+    imagine_prezentare = models.ImageField(upload_to="images/", blank=True, null=True)
 
     def __str__(self):
         return self.title
