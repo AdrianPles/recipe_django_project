@@ -40,6 +40,35 @@ def list_recipes(request: HttpRequest):
         recipes = recipes.order_by(camp_baza_de_date)
     return render(request, "recipes/home.html", context={"recipes": recipes})
 
+def list_user_recipes(request: HttpRequest, user_pk: int):
+    query = request.GET.get("q")
+    category_filter = request.GET.get("category", "all")
+    by = request.GET.get("by", "title")
+    sort = request.GET.get("sort", "asc")
+    recipes = Recipe.objects.filter(user_id= user_pk)
+    # __icontains caută cuvântul oriunde în titlu și ignoră literele mari/mici
+    if query:
+        recipes = recipes.filter(title__icontains=query)
+    # logica ne permite afisarea unei singure categorii selectate de utilizator
+    if category_filter != "all":
+        recipes = recipes.filter(category=category_filter)
+    # pentru o sortare corecta dupa 'titlu reteta' folosim functia Django/Lower
+    if by == "title":
+        if sort == "asc":
+            recipes = recipes.order_by(Lower("title"))
+        else:
+            recipes = recipes.order_by(Lower("title").desc())
+    else:
+        criterii_sortare = {
+            "category": "category",
+            "created_at": "created_at"
+        }
+        camp_baza_de_date = criterii_sortare.get(by, "title")
+        if sort == "desc":
+            camp_baza_de_date = f"-{camp_baza_de_date}"
+        recipes = recipes.order_by(camp_baza_de_date)
+    return render(request, "recipes/home.html", context={"recipes": recipes})
+
 @login_required()
 def create_recipe(request: HttpRequest):
     if request.method == "POST":
@@ -54,13 +83,17 @@ def create_recipe(request: HttpRequest):
         form = RecipeForm()
         return render(request, "recipes/recipe_form.html", context={"form": form})
 
+@login_required()
 def delete_recipe(request: HttpRequest, pk: int):
     recipe = get_object_or_404(Recipe, pk=pk)
-    if request.method == "POST":
-        recipe.delete()
-        return redirect("home")
+    if request.user.pk == recipe.user.pk:
+        if request.method == "POST":
+            recipe.delete()
+            return redirect("home")
+        else:
+            return render(request, "recipes/recipe_confirm_delete.html", context={"recipe": recipe})
     else:
-        return render(request, "recipes/recipe_confirm_delete.html", context={"recipe": recipe})
+        return HttpResponse("Nu ai permisiunea de a șterge rețeta altui utilizator!")
 
 def update_recipe(request: HttpRequest, pk: int):
     recipe = get_object_or_404(Recipe, pk=pk)
