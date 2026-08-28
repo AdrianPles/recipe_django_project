@@ -6,7 +6,7 @@ Acasă
 
 {% block content %}
 
-<form method="GET" action="" style="margin-bottom: 20px;">
+<form method="GET" action="" style="margin-bottom: 10px;">
     <!-- Păstrăm sortarea actuală dacă utilizatorul a selectat deja ceva -->
     <input type="hidden" name="category" value="{{ request.GET.category|default:'all' }}">
     <input type="hidden" name="by" value="{{ request.GET.by }}">
@@ -73,20 +73,34 @@ Acasă
 </script>
 
 
-    <ul>
+    <div class="recipes-list">
         {% for r in recipes %}
-            <li>{{ r.title }} - {{ r.get_category_display }}
-                <a href="{% url 'list_user_recipes' r.user.pk %}">{{ r.user.username }}️</a>
+            <div class="recipe-card">
                 {% if  r.imagine_prezentare %}
                     <img class="imagine_prezentare" src="{{ r.imagine_prezentare.url }}">
+                {% else %}
+                    <img class="imagine_prezentare" src="/media/images/default.jpg">
                 {% endif %}
 
-                {% if user.is_authenticated and user.pk == r.user.pk %}
-                    <a href="{% url 'delete_recipe' r.pk %}">🗑️</a>
-                    <a href="{% url 'update_recipe' r.pk %}">✏️️</a>
-                {% endif %}
-            </li>
+                    <div class="card-content">
+                       <h4>{{ r.title }}</h4>
+                    </div>
+                    <div class="category-info">
+                      <p>{{ r.get_category_display }}</p>
+                    </div>
+
+                    <div class="bottom-info">
+                       {% if user.is_authenticated and user.pk == r.user.pk %}
+                            <a href="{% url 'delete_recipe' r.pk %}">🗑Șterge</a>
+                            <a href="{% url 'update_recipe' r.pk %}">✏️️Modifică️</a>
+                        {% endif %}
+                    </div>
+                        <div class="user-info">
+                            <a href="{% url 'list_user_recipes' r.user.pk %}">{{ r.user.username }}️</a>
+                        </div>
+
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
 {% endblock %}
