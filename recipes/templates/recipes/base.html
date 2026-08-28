@@ -2,18 +2,21 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1200">
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css" type="text/css">
     <link rel="stylesheet" href="/static/main.css">
 </head>
 
 <body>
-
+    <div class="banner-container-fix">
+        <!-- Bannerul tău ca element fizic -->
+        <img src="/static/titlu-banner.png" alt="Banner">
+    </div>
     <nav class="main-nav">
         <div>
             <a href="{% url 'home' %}">Acasă</a>
-        <a href="{% url 'create_recipe' %}">Adaugă rețetă</a>
+            <a href="{% url 'create_recipe' %}">Adaugă rețetă</a>
         </div>
         <div>
             {% if user.is_authenticated %}

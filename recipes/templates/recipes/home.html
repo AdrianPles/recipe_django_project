@@ -5,8 +5,8 @@ Acasă
 {% endblock %}
 
 {% block content %}
-
-<form method="GET" action="" style="margin-bottom: 10px;">
+<div class="select-label">
+    <form method="GET" action="" style="margin-bottom: 10px;">
     <!-- Păstrăm sortarea actuală dacă utilizatorul a selectat deja ceva -->
     <input type="hidden" name="category" value="{{ request.GET.category|default:'all' }}">
     <input type="hidden" name="by" value="{{ request.GET.by }}">
@@ -16,6 +16,7 @@ Acasă
     <input type="text" id="search" name="q" value="{{ request.GET.q }}" placeholder="Ex: ciorbă cartofi...">
     <button type="submit">Caută</button>
 </form>
+
 
 <!-- Meniul 1: FILTRARE STRICTĂ DUPĂ CATEGORIE -->
 <label for="category_filter">Filtrează după categorie:</label>
@@ -43,6 +44,7 @@ Acasă
     <option value="asc">Crescător</option>
     <option value="desc">Descrescător</option>
 </select>
+</div>
 
 <script>
     // 1. Citim valorile actuale din link (URL) sau punem valorile implicite din view
@@ -83,7 +85,7 @@ Acasă
                 {% endif %}
 
                     <div class="card-content">
-                       <h4>{{ r.title }}</h4>
+                       <h3>{{ r.title }}</h3>
                     </div>
                     <div class="category-info">
                       <p>{{ r.get_category_display }}</p>
@@ -91,8 +93,8 @@ Acasă
 
                     <div class="bottom-info">
                        {% if user.is_authenticated and user.pk == r.user.pk %}
-                            <a href="{% url 'delete_recipe' r.pk %}">🗑Șterge</a>
-                            <a href="{% url 'update_recipe' r.pk %}">✏️️Modifică️</a>
+                            <a href="{% url 'delete_recipe' r.pk %}">🥤Șterge</a>
+                            <a href="{% url 'update_recipe' r.pk %}">️🖍️Modifică️</a>
                         {% endif %}
                     </div>
                         <div class="user-info">

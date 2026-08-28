@@ -5,10 +5,12 @@ Modifică rețetă
 {% endblock %}
 
 {% block content %}
-    <h1>Modifică rețetă:</h1>
+<div class="update-recipe">
+   <h1>Modifică rețetă:</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Salvează rețeta</button>
     </form>
+</div>
 {% endblock %}
