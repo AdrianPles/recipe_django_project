@@ -6,13 +6,16 @@ Confirmă ștergerea rețetei
 
 {% block content %}
 <div class="recipe-delete">
-  <p>Dorești ștergerea rețetei?</p>
-    <p>{{ recipe }}</p>
+    <p>Dorești ștergerea rețetei:</p>
+    <p>"{{ recipe }}"?</p>
+</div>
+
+<div class="choices">
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Da</button>
+        <button class="delete-choice" type="submit">Da</button>
     </form>
-    <a class="cancel-delete" href="{% url 'home' %}">Nu</a>
+    <button class="delete-choice" onclick="window.location = '/'">Nu</button>
 </div>
 {% endblock %}
 

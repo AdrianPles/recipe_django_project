@@ -1,21 +1,3 @@
-
-.cancel-delete:visited {
-color: var(--accent-text);
-}
-
-.cancel-delete {
-border: var(--border-width) solid var(--accent);
-background-color: var(--accent);
-color: var(--accent-text);
-padding: 0.5em;
-text-decoration: none;
-line-height: normal;
-display: inline-block;
-max-width: 100%;
-border-radius: var(--standard-border-radius);
-width: 45px;
-}
-
 nav {
     padding:20px 0px 0px 30px;
 }
@@ -127,9 +109,6 @@ h3{
     color: black;
 }
 
-.delete-choice{
-    width: 100px;
-}
 .choices {
     display: flex;
     gap: 10px;
@@ -181,8 +160,6 @@ html, body {
     display: block;
 }
 
-
-
 .imagine_prezentare {
     width: 100%;
     height: 50%;
@@ -195,9 +172,23 @@ html, body {
  }
 
 .update-recipe{
-    padding:0px 0px 0px 20px;
+    padding:0px 0px 20px 20px;
 
  }
 .recipe-delete{
-    padding:0px 0px 0px 20px;
+    padding: 40px 0px 0px 20px;
+    font-size: larger; !important;
  }
+
+.delete-choice{
+    width: 60px;
+    height: 40px; !important;
+    border-radius: 8px;
+    font-size: medium;
+    gap 50px; !important;
+}
+
+.choices{
+    display: flex;
+    padding:10px 0px 0px 60px;
+}

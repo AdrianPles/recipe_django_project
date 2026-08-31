@@ -78,7 +78,7 @@ Acasă
     <div class="recipes-list">
         {% for r in recipes %}
             <div class="recipe-card">
-                {% if  r.imagine_prezentare %}
+                {% if r.imagine_prezentare %}
                     <img class="imagine_prezentare" src="{{ r.imagine_prezentare.url }}">
                 {% else %}
                     <img class="imagine_prezentare" src="/media/images/default.jpg">
