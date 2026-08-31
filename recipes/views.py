@@ -95,13 +95,17 @@ def delete_recipe(request: HttpRequest, pk: int):
     else:
         return HttpResponse("Nu ai permisiunea de a șterge rețeta altui utilizator!")
 
+@login_required()
 def update_recipe(request: HttpRequest, pk: int):
     recipe = get_object_or_404(Recipe, pk=pk)
-    if request.method == "POST":
-        recipe_instance = RecipeForm(request.POST, request.FILES, instance=recipe)
-        if recipe_instance.is_valid():
-            recipe_instance.save()
-            return redirect("home")
+    if request.user.pk == recipe.user.pk:
+        if request.method == "POST":
+            recipe_instance = RecipeForm(request.POST, request.FILES, instance=recipe)
+            if recipe_instance.is_valid():
+                recipe_instance.save()
+                return redirect("home")
+        else:
+            form = RecipeForm(instance=recipe)
+            return render(request, "recipes/update_recipe_form.html", context={"form": form})
     else:
-        form = RecipeForm(instance=recipe)
-        return render(request, "recipes/update_recipe_form.html", context={"form": form})
+        return HttpResponse("Nu ai permisiunea de a modifica rețeta altui utilizator!")
