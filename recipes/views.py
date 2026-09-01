@@ -81,7 +81,7 @@ def create_recipe(request: HttpRequest):
             return redirect("home")
     else:
         form = RecipeForm()
-        return render(request, "recipes/recipe_form.html", context={"form": form})
+    return render(request, "recipes/recipe_form.html", context={"form": form})
 
 @login_required()
 def delete_recipe(request: HttpRequest, pk: int):
