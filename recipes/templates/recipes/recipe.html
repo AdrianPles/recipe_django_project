@@ -6,31 +6,89 @@
 
 {% block content %}
 <div class="recipe-detail">
-   <h1>{{ recipe.title }}</h1>
+    <h1>{{ recipe.title }}</h1>
     <h4> Detalii rețetă:</h4>
-    <p>{{ recipe.description }}</p>
-    <p>{{ recipe.created_at }}</p>
-    <p> {{ recipe.category }}</p>
-    <p>{{ recipe.cooking_time }}</p>
+    <div class="recipe-container" style="display: inline-block;">
+         <div class="recipe-view" style="white-space: pre-wrap;">
+            <p>{{ recipe.description }}</p>
+        </div>
+        <div class="recipe-delete-modify">
+             {% if recipe %}
+                {% if user.is_authenticated and user.pk == recipe.user.pk %}
+                    <a href="{% url 'delete_recipe' recipe.pk %}">🥤Șterge</a>
+                    <a href="{% url 'update_recipe' recipe.pk %}">️🖍️Modifică️</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <br style="clear: both;">
+    <br style="clear: both;">
+    <strong>Timp de gătire: </strong>{{ recipe.cooking_time }} min.<br/>
+    <strong>Categorie: </strong>{{ recipe.get_category_display }}<br/>
+    <strong>Dată adăugare: </strong>{{ recipe.created_at }}<br/>
+    <strong>Aăugată de: </strong>{{ recipe.user.username }}<br/>
+</div>
 
     <div class="comments">
         <h4>Comentarii:</h4>
-        {% for c in comments.all %}
-            <div class="comment">
-                <p>{{ c.text }}</p>
-                <span class="comment-meta">{{ c.created_at|date:"d M, Y " }}</span>
-                <strong>{{ c.user.username }}</strong>
+        <div class="comment-box" style="margin-bottom: 100px;">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'add_comment' recipe.pk %}">
+                    {% csrf_token %}
+                    <textarea
+                            name="text"
+                            rows="3"
+                            placeholder="Scrie un comentariu..."
+                            cols="100"
+                            wrap="hard"
+                            style="width: 100%;
+                            max-width: 100ch;
+                            white-space: pre-wrap;
+                            word-wrap: break-word;
+                            font-size: 18px;"
+                    ></textarea>
+                    <button type="submit" style="display: block;">Salvează comentariul</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Conectează-te pentru a scrie comentarii.</a>
+            {% endif %}
+        </div>
+            {% for c in comments %}
+                <div class="comment" style="margin-bottom: 20px;">
+                    <span style="display: block; max-width: 100ch; white-space: pre-wrap; font-size: 18px; word-wrap: break-word;">{{ c.text }}</span>
+                    <small style="color: blue; display: block;">
+                        {{ c.created_at|date:"H:i, d M, Y " }}
+                    </small>
+                    <strong>{{ c.user.username }}</strong>
+                     {% if c.user == request.user %}
+                        <form method="POST" action="{% url 'delete_comment' c.pk %}" style="display: inline-block; margin-top: 5px;" onsubmit="return confirm('Vrei să ștergi acest comentariu?');">
+                            {% csrf_token %}
+                            <button type="submit" style="color: red; background: none; border: none; padding: 0; cursor: pointer; font-size: 16px; text-decoration: underline;">
+                                Șterge comentariul
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if comments.has_other_pages %}
+             <div class="pagination-bar" style="margin-bottom: 20px; text-align: center; padding: 15px; background-color: bisque; border-radius: 8px; max-width: 100ch;">
+                <span style="font-weight: bold; margin-right: 15px; color: grey; font-size: 18px;">Pagina:</span>
+                <!-- Parcurgem fiecare număr de pagină disponibil -->
+                {% for page_num in comments.paginator.page_range %}
+                    {% if comments.number == page_num %}
+                        <!-- Pagina curentă (este evidențiată și nu se poate da click pe ea) -->
+                        <span class="current-page" style="font-weight: bold; font-size: 18px; margin: 0 10px; color: #000; padding: 5px 10px; background: bisque; border-radius: 4px;">
+                            {{ page_num }}
+                        </span>
+                    {% else %}
+                        <!-- Celelalte pagini sub formă de link-uri cu cifre -->
+                        <a href="?page={{ page_num }}" style="margin: 0 10px; text-decoration: none; color: blue; font-size: 16px; padding: 5px 10px;">
+                            {{ page_num }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
             </div>
-        {% endfor %}
     <div/>
-    {% if user.is_authenticated %}
-    <form method="post" action="{% url 'add_comment' recipe.pk %}">
-        {% csrf_token %}
-        <textarea name="text" rows="3", placeholder="Scrie un comentariu..."></textarea>
-        <button type="submit">Salvează comentariul</button>
-    </form>
-    {% else %}
-        <a href="{% url 'login' %}">Conectează-te pentru a scrie comentarii.</a>
-    {% endif %}
-<div/>
 {% endblock %}

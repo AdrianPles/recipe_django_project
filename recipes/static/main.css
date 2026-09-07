@@ -142,11 +142,11 @@ html, body {
 .banner-container-fix {
     position: absolute ;
     top: 10px;              /* Lasă un mic spațiu elegant de 10px sus */
-    left: 47%;              /* Îl aduce pe mijloc */
+    left: 50%;              /* Îl aduce pe mijloc */
     transform: translateX(-50%); /* Centrează perfect elementul pe orizontală */
     z-index: 10;             /* Îl ține deasupra fundalului, dar sub alte elemente interactive */
 
-    width: 500px;           /* Lățimea fixă a bannerului tău */
+    width: 300px;           /* Lățimea fixă a bannerului tău */
     height: auto;
 
     /* 👈 AICI APLICĂM ROTUNJIREA */
@@ -168,7 +168,7 @@ html, body {
 }
 
 .adding-recipe{
-    padding:0px 0px 0px 20px;
+    padding:0px 0px 20px 20px;
  }
 
 .update-recipe{
@@ -191,4 +191,44 @@ html, body {
 .choices{
     display: flex;
     padding:10px 0px 0px 60px;
+}
+
+.recipe-detail{
+    padding:0px 0px 0px 30px;
+}
+
+.comments{
+    padding:0px 0px 0px 30px;
+}
+
+.recipe-view{
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: burlywood;
+    font-size: larger;
+    padding:0px 30px 0px 30px;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.recipe-delete-modify{
+    display: flex !important;
+    border-radius: 8px;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.recipe-delete-modify a {
+    text-decoration: none !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+.bottom-info a {
+    text-decoration: none !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
 }

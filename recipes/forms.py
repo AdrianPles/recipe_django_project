@@ -11,6 +11,7 @@ class RecipeForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'placeholder': 'Exemplu:\n- 200g făină\n- 2 ouă\n\nPași:\n1. Se amestecă ingredientele...',
                 'rows': 15,
+                'style': 'width: 100%; max-width: 100%; font-size: 18px; white-space: pre-wrap; word-wrap: break-word;',
             }),
         }
 

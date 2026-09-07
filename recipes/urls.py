@@ -11,6 +11,7 @@ urlpatterns = [
     path("user/<int:user_pk>/recipes/", views.list_user_recipes, name='list_user_recipes'),
     path("recipe/<int:recipe_pk>/comments/", views.add_comment, name="add_comment"),
     path("recipe/<int:recipe_pk>/", views.view_recipe, name="view_recipe"),
+    path('comment/<int:comment_pk>/delete/', views.delete_comment, name='delete_comment'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

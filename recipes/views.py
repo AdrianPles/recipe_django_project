@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Model
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
@@ -107,7 +108,7 @@ def update_recipe(request: HttpRequest, pk: int):
             if recipe_instance.is_valid():
                 recipe_instance.save()
                 messages.success(request, f"Rețeta '{recipe.title}' a fost modificată cu succes!")
-                return redirect("home")
+                return redirect("view_recipe", recipe_pk= recipe.pk)
         else:
             form = RecipeForm(instance=recipe)
             return render(request, "recipes/update_recipe_form.html", context={"form": form})
@@ -116,8 +117,11 @@ def update_recipe(request: HttpRequest, pk: int):
 
 def view_recipe(request: HttpRequest, recipe_pk: int):
     recipe = get_object_or_404(Recipe, pk=recipe_pk)
-    comments = recipe.comments
-    return render(request, "recipes/recipe.html", context={"recipe": recipe, "comments": comments})
+    comments = recipe.comments.all().order_by("-created_at")
+    paginator = Paginator(comments, 5)
+    page_number = request.GET.get('page')
+    comments_page = paginator.get_page(page_number)
+    return render(request, "recipes/recipe.html", context={"recipe": recipe, "comments": comments_page})
 
 @login_required()
 def add_comment(request: HttpRequest, recipe_pk: int):
@@ -131,8 +135,20 @@ def add_comment(request: HttpRequest, recipe_pk: int):
             comment.user = user
             comment.save()
             messages.success(request, "Comentariu adăugat cu succes!")
-            return redirect("home")
+            return redirect("view_recipe", recipe_pk=recipe.id)
+        else:
+            messages.error(request, "Comentariul nu s-a putut salva. Verifică lungimea textului!")
     return redirect("home")
 
+@login_required()
+def delete_comment(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    recipe_id = comment.recipe.pk
+    if comment.user == request.user:
+        comment.delete()
+        messages.success(request,"Comentariul a fost șters cu succes!")
+    else:
+        messages.error(request,"Nu ai permisiunea de a șterge acest comentariu!")
+    return redirect("view_recipe", recipe_pk=recipe_id)
 
 
