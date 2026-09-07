@@ -77,7 +77,7 @@ Acasă
 
     <div class="recipes-list">
         {% for r in recipes %}
-            <div class="recipe-card">
+            <div class="recipe-card" onclick="window.location = '{% url 'view_recipe' r.pk %}'">
                 {% if r.imagine_prezentare %}
                     <img class="imagine_prezentare" src="{{ r.imagine_prezentare.url }}">
                 {% else %}

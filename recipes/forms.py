@@ -1,5 +1,5 @@
 from django import forms
-from . models import Recipe
+from . models import Recipe, Comment
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -12,4 +12,12 @@ class RecipeForm(forms.ModelForm):
                 'placeholder': 'Exemplu:\n- 200g făină\n- 2 ouă\n\nPași:\n1. Se amestecă ingredientele...',
                 'rows': 15,
             }),
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["text"]
+        widgets = {
+            "text": forms.Textarea(attrs={ "rows": 3, "placeholder": "Scrie un comentariu aici..." })
         }

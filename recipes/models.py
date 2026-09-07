@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.fields import DateTimeField
+from django.utils import timezone
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -49,5 +50,15 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    text = models.CharField(max_length=255)
+    recipe = models.ForeignKey(Recipe, on_delete= models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete= models.CASCADE, related_name="comments")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comentariu de {self.user.username} pentru rețeta '{self.recipe.title}'"
+
 
 

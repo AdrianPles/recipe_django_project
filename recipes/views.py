@@ -2,8 +2,9 @@ from django.db.models import Model
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import RecipeForm
-from .models import Recipe
+from django.contrib import messages
+from .forms import RecipeForm, CommentForm
+from .models import Recipe, Comment
 from django.db.models.functions import Lower
 
 
@@ -78,6 +79,7 @@ def create_recipe(request: HttpRequest):
             recipe = form.save(commit=False)
             recipe.user = request.user
             recipe.save()
+            messages.success(request, f"Rețeta '{recipe.title}' a fost creată cu succes!")
             return redirect("home")
     else:
         form = RecipeForm()
@@ -89,6 +91,7 @@ def delete_recipe(request: HttpRequest, pk: int):
     if request.user.pk == recipe.user.pk:
         if request.method == "POST":
             recipe.delete()
+            messages.success(request, f"Rețeta '{recipe.title}' a fost ștearsă cu succes!")
             return redirect("home")
         else:
             return render(request, "recipes/recipe_confirm_delete.html", context={"recipe": recipe})
@@ -103,9 +106,33 @@ def update_recipe(request: HttpRequest, pk: int):
             recipe_instance = RecipeForm(request.POST, request.FILES, instance=recipe)
             if recipe_instance.is_valid():
                 recipe_instance.save()
+                messages.success(request, f"Rețeta '{recipe.title}' a fost modificată cu succes!")
                 return redirect("home")
         else:
             form = RecipeForm(instance=recipe)
             return render(request, "recipes/update_recipe_form.html", context={"form": form})
     else:
         return HttpResponse("Nu ai permisiunea de a modifica rețeta altui utilizator!")
+
+def view_recipe(request: HttpRequest, recipe_pk: int):
+    recipe = get_object_or_404(Recipe, pk=recipe_pk)
+    comments = recipe.comments
+    return render(request, "recipes/recipe.html", context={"recipe": recipe, "comments": comments})
+
+@login_required()
+def add_comment(request: HttpRequest, recipe_pk: int):
+    recipe = get_object_or_404(Recipe, pk=recipe_pk)
+    user = request.user
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.recipe = recipe
+            comment.user = user
+            comment.save()
+            messages.success(request, "Comentariu adăugat cu succes!")
+            return redirect("home")
+    return redirect("home")
+
+
+
