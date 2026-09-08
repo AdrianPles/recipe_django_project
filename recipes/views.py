@@ -135,7 +135,7 @@ def add_comment(request: HttpRequest, recipe_pk: int):
             comment.user = user
             comment.save()
             messages.success(request, "Comentariu adăugat cu succes!")
-            return redirect("view_recipe", recipe_pk=recipe.id)
+            return redirect("view_recipe", recipe_pk=recipe_pk)
         else:
             messages.error(request, "Comentariul nu s-a putut salva. Verifică lungimea textului!")
     return redirect("home")

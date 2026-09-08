@@ -22,3 +22,12 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User                                 # now points to CustomUser
         fields = ("username", "email", "password1", "password2")
+
+class DeleteAccountForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Introdu parola pentru confirmare'
+        }),
+        label="Parolă curentă"
+    )

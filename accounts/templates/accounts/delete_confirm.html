@@ -1,0 +1,44 @@
+{% extends 'recipes/base.html' %}
+
+{% block title %}
+Ștergere cont
+{% endblock %}
+
+{% block content %}
+<div class="user-delete" style="max-width: 500px;">
+    <div class="card border-danger shadow">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">⚠️ Ștergere Cont Definitivă</h4>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">
+                Ești sigur că vrei să îți ștergi contul? Această acțiune este <strong>ireversibilă</strong>. 
+                Rețetele create de tine vor rămâne active pe site, sub administrarea comunității.
+            </p>
+            
+            <!-- Afișarea erorilor de parolă dacă există -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.password.id_for_label }}" class="form-label font-weight-bold">
+                        {{ form.password.label }}
+                    </label>
+                    {{ form.password }}
+                </div>
+                <div class="buttons-delete">
+                    <button class="btn-secondary" onclick="window.location = '/'">Anulează</button>
+                    <button type="submit" class="btn-danger">Șterge definitiv contul</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

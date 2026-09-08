@@ -22,6 +22,9 @@
             {% if user.is_authenticated %}
                 <span> Bine ai venit, {{ user.username }}!</span>
                 <a href="{% url 'logout' %}">Deconectare</a>
+                <div class="confirm_delete">
+                    <a href="{% url 'delete_confirm' %}">Șterge contul</a>
+                </div>
             {% else %}
                 <a href="{% url 'login' %}">Conectare / </a>
                 <a href="{% url 'register' %}">Înregistrare cont</a>

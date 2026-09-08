@@ -5,6 +5,15 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
+def get_default_superuser():
+    User_Model = get_user_model()
+    # Caută primul admin din baza de date
+    superuser = User_Model.objects.filter(is_superuser=True).first()
+    if superuser:
+        return superuser.pk
+    return 1
+
 class Recipe(models.Model):
     class Meta:
         # în limba română cu diacritice, configurăm afișarea la singular și plural în interfețe (ex: Django Admin).
@@ -45,7 +54,7 @@ class Recipe(models.Model):
         help_text='Introdu timpul total exprimat în minute.',
         default=30
     )
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='recipes')
+    user = models.ForeignKey(User, on_delete=models.SET(get_default_superuser), related_name='recipes',  null=True)
     imagine_prezentare = models.ImageField(upload_to="images/", blank=True, null=True)
 
     def __str__(self):
@@ -54,7 +63,7 @@ class Recipe(models.Model):
 class Comment(models.Model):
     text = models.CharField(max_length=255)
     recipe = models.ForeignKey(Recipe, on_delete= models.CASCADE, related_name="comments")
-    user = models.ForeignKey(User, on_delete= models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete= models.SET(get_default_superuser), related_name="comments", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

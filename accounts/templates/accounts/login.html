@@ -6,12 +6,14 @@ Conectare
 
 {% block content %}
 
+<div class="connecting">
   <h2>Conectare</h2>
-
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Conectare</button>
   </form>
+</div>
+
 
 {% endblock %}

@@ -207,8 +207,12 @@ html, body {
     border-radius: 20px;
     background: burlywood;
     font-size: larger;
-    padding:0px 30px 0px 30px;
-    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.6),
+        inset 0 0 30px rgba(92, 58, 33, 0.4),
+        inset 0 0 100px rgba(92, 58, 33, 0.2);
+    padding: 30px 30px;
+    position: relative;
 }
 
 .recipe-delete-modify{
@@ -231,4 +235,29 @@ html, body {
     text-decoration: none !important;
     box-shadow: none !important;
     border-bottom: none !important;
+}
+
+.user-delete {
+    display: block;
+    padding: 30px 30px;
+    margin: 30px 0px 0px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: burlywood;
+    font-size: larger;
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.6),
+        inset 0 0 30px rgba(92, 58, 33, 0.4),
+        inset 0 0 100px rgba(92, 58, 33, 0.2);
+    position: relative;
+}
+
+.connecting {
+     margin: 30px 0px 0px 30px;
+}
+
+.confirm_delete a {
+    padding: 20px 10px 0px 0px;
+    justify-content: flex-end;
+    color: red;
 }
