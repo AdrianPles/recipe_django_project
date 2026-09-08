@@ -177,15 +177,15 @@ html, body {
  }
 .recipe-delete{
     padding: 40px 0px 0px 20px;
-    font-size: larger; !important;
+    font-size: larger !important;
  }
 
 .delete-choice{
     width: 60px;
-    height: 40px; !important;
+    height: 40px !important;
     border-radius: 8px;
     font-size: medium;
-    gap 50px; !important;
+    gap: 50px !important;
 }
 
 .choices{
@@ -207,10 +207,9 @@ html, body {
     border-radius: 20px;
     background: burlywood;
     font-size: larger;
-    box-shadow:
-        0 0 20px rgba(0, 0, 0, 0.6),
-        inset 0 0 30px rgba(92, 58, 33, 0.4),
-        inset 0 0 100px rgba(92, 58, 33, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6),
+                inset 0 0 30px rgba(92, 58, 33, 0.4),
+                inset 0 0 100px rgba(92, 58, 33, 0.2);
     padding: 30px 30px;
     position: relative;
 }

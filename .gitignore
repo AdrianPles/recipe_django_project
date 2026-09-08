@@ -1,8 +1,8 @@
 .venv
 .idea
+.coverage
 
 *.sqlite3
 *.jpg
 *.webp
 *.png
-*.coverage
