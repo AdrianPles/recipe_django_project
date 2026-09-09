@@ -211,6 +211,17 @@ html, body {
     padding:0px 0px 0px 30px;
 }
 
+.comment {
+    background: blanchedalmond;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+    width: 60ch;                 /* Setează lățimea fixă la aprox. 60 de caractere */
+    max-width: 100%;             /* Se asigură că box-ul rămâne responsiv pe ecrane mici */
+    overflow-wrap: break-word;
+    padding: 0px 10px 0px 10px;
+}
+
 .recipe-view{
     display: block;
     border: 1px solid #ccc;
@@ -280,4 +291,8 @@ html, body {
     font-size: 6rem !important;
     float: none !important;
     clear: both;
+}
+
+.register {
+     padding: 20px 0px 30px 30px !important;
 }

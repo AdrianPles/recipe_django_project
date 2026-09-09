@@ -26,7 +26,7 @@
         <h1 class="titlu-sub-banner">Colecție de rețete culinare</h1>
         <div>
             {% if user.is_authenticated %}
-                <span> Bine ai venit, {{ user.username }}!</span>
+                <span> Bine ai venit, <a href="{% url 'list_user_recipes' user.pk %}">{{ user.username }}</a>!</span>
                 <a href="{% url 'logout' %}">Deconectare</a>
                 <div class="confirm_delete">
                     <a href="{% url 'delete_confirm' %}">Șterge contul</a>
