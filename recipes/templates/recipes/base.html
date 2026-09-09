@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1200">
+     <style>
+        body {
+            padding-top: 210px !important;
+        }
+    </style>
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css" type="text/css">
     <link rel="stylesheet" href="/static/main.css">
@@ -11,13 +16,14 @@
 <body>
     <div class="banner-container-fix">
         <!-- Bannerul ca element fizic -->
-        <img src="/static/titlu-banner.png" alt="Banner">
+        <img src="/static/titlu-banner.jpg" alt="Banner">
     </div>
     <nav class="main-nav">
         <div>
             <a href="{% url 'home' %}">Acasă / </a>
             <a href="{% url 'create_recipe' %}">Adaugă rețetă</a>
         </div>
+        <h1 class="titlu-sub-banner">Colecție de rețete culinare</h1>
         <div>
             {% if user.is_authenticated %}
                 <span> Bine ai venit, {{ user.username }}!</span>

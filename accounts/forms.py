@@ -12,7 +12,6 @@ username_validator = RegexValidator(
 
 
 class RegisterForm(UserCreationForm):
-    # 2. Suprascriem câmpul username pentru a aplica validatorul nostru
     username = forms.CharField(
         validators=[username_validator],
         label="Nume utilizator",
@@ -20,7 +19,7 @@ class RegisterForm(UserCreationForm):
         help_text="Litere (inclusiv diacritice), cifre, spații și caracterele @/./+/-/_."
     )
     class Meta:
-        model = User                                 # now points to CustomUser
+        model = User
         fields = ("username", "email", "password1", "password2")
 
 class DeleteAccountForm(forms.Form):

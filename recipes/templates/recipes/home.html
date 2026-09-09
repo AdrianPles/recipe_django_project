@@ -80,8 +80,20 @@ Acasă
             <div class="recipe-card" onclick="window.location = '{% url 'view_recipe' r.pk %}'">
                 {% if r.imagine_prezentare %}
                     <img class="imagine_prezentare" src="{{ r.imagine_prezentare.url }}">
+                {% elif r.category == "mic_dejun" %}
+                        <img class="imagine_prezentare" src="/static/mic_dejun_default.jpg">
+                {% elif r.category == "ciorbe" %}
+                        <img class="imagine_prezentare" src="/static/ciorbe_supe_default.webp">
+                {% elif r.category == "fel_principal" %}
+                        <img class="imagine_prezentare" src="/static/felul_doi_default.webp">
+                {% elif r.category == "desert" %}
+                        <img class="imagine_prezentare" src="/static/desert_default.jpg">
+                {% elif r.category == "patiserie" %}
+                        <img class="imagine_prezentare" src="/static/patiserie_default.webp">
+                {% elif r.category == "panificatie" %}
+                        <img class="imagine_prezentare" src="/static/panificatie_default.jpg">
                 {% else %}
-                    <img class="imagine_prezentare" src="/media/images/default.jpg">
+                        <img class="imagine_prezentare" src="/static/default_img.jpg">
                 {% endif %}
 
                     <div class="card-content">
