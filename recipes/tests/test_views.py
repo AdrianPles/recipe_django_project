@@ -3,7 +3,33 @@ from django.contrib.auth import get_user_model
 from django.test.client import Client
 from django.urls import reverse
 from recipes.models import Recipe
+from recipes.models import get_default_superuser
+
 User = get_user_model()
+
+@pytest.mark.django_db
+def test_get_default_superuser_when_exists():
+    admin_user = User.objects.create_superuser(
+        username="admin_test",
+        email="admin@test.com",
+        password="password1234"
+    )
+    result_pk = get_default_superuser()
+    assert result_pk == admin_user.pk
+
+@pytest.mark.django_db
+def test_get_default_superuser_when_not_exists():
+    assert User.objects.filter(is_superuser=True).count() == 0
+    result_pk = get_default_superuser()
+    assert result_pk == 1
+
+@pytest.mark.django_db
+def test_get_default_superuser_returns_first_admin_only():
+    admin_1 = User.objects.create_superuser(username="admin1", email="a1@t.com", password="pwd")
+    admin_2 = User.objects.create_superuser(username="admin2", email="a2@t.com", password="pwd")
+    result_pk = get_default_superuser()
+    assert result_pk == admin_1.pk
+    assert result_pk != admin_2.pk
 
 
 # decorator care creeaza bd provizorie pentru teste
