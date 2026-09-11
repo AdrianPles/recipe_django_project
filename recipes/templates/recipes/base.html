@@ -9,6 +9,7 @@
         }
     </style>
     <title>{% block title %} {% endblock %}</title>
+    <link href="https://googleapis.com" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css" type="text/css">
     <link rel="stylesheet" href="/static/main.css">
 </head>
@@ -20,16 +21,16 @@
     </div>
     <nav class="main-nav">
         <div>
-            <a href="{% url 'home' %}">Acasă / </a>
-            <a href="{% url 'create_recipe' %}">Adaugă rețetă</a>
+            <a href="{% url 'home' %}">🏠︎️ Acasă  </a>
         </div>
-        <h1 class="titlu-sub-banner">Colecție de rețete culinare</h1>
+
+        <h1 class="titlu-sub-banner"> 👨🏼‍🍳🍳 Adrian la cratiță 🥣</h1>
         <div>
             {% if user.is_authenticated %}
-                <span> Bine ai venit, <a href="{% url 'list_user_recipes' user.pk %}">{{ user.username }}</a>!</span>
-                <a href="{% url 'logout' %}">Deconectare</a>
+                <span class="welcome"> Bine ai venit, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}">Deconectare ✖️</a>
                 <div class="confirm_delete">
-                    <a href="{% url 'delete_confirm' %}">Șterge contul</a>
+                    <a href="{% url 'delete_confirm' %}">Șterge contul 🛑</a>
                 </div>
             {% else %}
                 <a href="{% url 'login' %}">Conectare / </a>
@@ -37,7 +38,12 @@
             {% endif %}
         </div>
     </nav>
-
+        <ul class="retetele-mele">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'create_recipe' %}">Adaugă rețetă</a></li>
+                <li><a href="{% url 'list_user_recipes' user.pk %}">Rețetele mele</a></li>
+            {% endif %}
+        </ul>
     {% if messages%}
         <ul class="messages" id="messages">
             {% for msg in messages %}

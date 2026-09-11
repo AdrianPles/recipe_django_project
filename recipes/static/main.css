@@ -100,8 +100,9 @@ h3{
 
 .select-label{
     display: flex;
-    flex-direction: column;    /* 👈 SCHIMBARE: Le așază pe verticală, una sub cealaltă */
+    flex-direction: row;    /* 👈 SCHIMBARE: Le așază pe verticală, una sub cealaltă */
     align-items: flex-start;   /* Le aliniază pe toate la marginea din stânga */
+    justify-content: flex-start;
     gap: 5px !important;
     padding:20px 10px 20px 10px;
     background: transparent;
@@ -112,7 +113,8 @@ h3{
 .select-label * {
     border-radius: 8px;
     color: black;
-    font-size: large !important;
+    font-size: 18px !important; /* Dimensiunea dorită */
+    line-height: normal !important;
     border: none !important;
 }
 
@@ -277,7 +279,7 @@ html, body {
 }
 
 .confirm_delete a {
-    padding: 20px 10px 0px 0px;
+    padding: 50px 10px 0px 0px;
     justify-content: flex-end;
     color: red;
 }
@@ -287,8 +289,8 @@ html, body {
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    font-family: 'Google Sans', 'Google Sans Text', sans-serif !important;
-    font-size: 6rem !important;
+    font-family: 'Pacifico', cursive !important; /* Schimbat aici */
+    font-size: 5rem !important;
     float: none !important;
     clear: both;
 }
@@ -296,3 +298,60 @@ html, body {
 .register {
      padding: 20px 0px 30px 30px !important;
 }
+
+.retetele-mele {
+    display: flex !important;
+    flex-direction: column; /* Pune cele două rețete una sub alta */
+    padding: 0px 0px 0px 20px;             /* Elimină spațiul implicit din stânga listei */
+    font-size: larger;
+    margin-top: 2px;
+}
+
+@media screen and (max-width: 1200px) {
+
+    /* Mărim textul pe mobil ca să fie ușor de citit și de apăsat cu degetul */
+    .main-nav a,
+    .retetele-mele a,
+    .welcome {
+        font-size: 40px !important;
+        display: block !important; /* Transformă linkul într-o zonă mare de click */
+    }
+    .titlu-sub-banner {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+
+    /* Stilurile tale anterioare (meniu, welcome, etc.) rămân neschimbate */
+
+    /* FORȚĂM MĂRIREA PENTRU TOATE ELEMENTELE DIN FORMULAR */
+    .select-label label,
+    .select-label form label,
+    .select-label input,
+    .select-label button,
+    .select-label select {
+        display: flex !important;
+        font-size: 25px !important; /* Dimensiunea dorită */
+        line-height: normal !important;
+        flex-direction: row !important;    /* Le așază pe un singur rând (orizontal) */
+        justify-content: flex-start !important; /* Le trage/lipește la maxim în STÂNGA */
+        align-items: center !important;    /* Le aliniază frumos la mijloc pe verticală */
+        flex-wrap: nowrap !important;      /* Împiedică elementele să sară pe rândul următor */
+        gap: 5px !important;               /* Pune un spațiu mic între căsuțe ca să aibă loc toate */
+        width: 100% !important;
+    }
+
+    /* Adăugăm padding suplimentar și pe buton pentru a se potrivi ca înălțime cu search-ul */
+    .select-label button {
+        padding: 10px 20px !important;
+        cursor: pointer;
+        flex-shrink: 0 !important;
+    }
+}
+
+.select-label input[type="text"],
+    .select-label select {
+        width: auto !important;            /* Nu le lăsa să ocupe tot ecranul */
+        max-width: 180px !important;       /* Ajustează această valoare în pixeli dacă vrei căsuțe mai mari sau mai mici */
+    }

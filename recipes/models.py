@@ -63,7 +63,7 @@ class Recipe(models.Model):
 class Comment(models.Model):
     text = models.CharField(max_length=255)
     recipe = models.ForeignKey(Recipe, on_delete= models.CASCADE, related_name="comments")
-    user = models.ForeignKey(User, on_delete= models.SET(get_default_superuser), related_name="comments", null=True)
+    user = models.ForeignKey(User, on_delete= models.CASCADE, related_name="comments", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
